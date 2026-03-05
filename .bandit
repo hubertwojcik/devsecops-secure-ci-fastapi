@@ -1,0 +1,20 @@
+[bandit]
+# Bandit configuration for security scanning
+# This project has intentional vulnerabilities for educational purposes
+
+exclude_dirs = [
+    '/tests',
+    '/.venv',
+    '/venv',
+]
+
+# Skip specific tests for intentional vulnerabilities
+# B307: eval usage (intentional in lab.py)
+# B608: SQL injection (not applicable)
+skips = []
+
+# Set confidence level (LOW, MEDIUM, HIGH)
+confidence = MEDIUM
+
+# Set severity level (LOW, MEDIUM, HIGH)
+level = LOW

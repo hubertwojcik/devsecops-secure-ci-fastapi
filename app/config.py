@@ -2,6 +2,7 @@
 
 import os
 
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
 
@@ -11,31 +12,21 @@ class Settings(BaseSettings):
     app_name: str = "Notes API"
     lab_mode: bool = False
 
-    # VULNERABILITY 1: Hardcoded secret key
-    # This is a security vulnerability - secrets should never be hardcoded
-    # SAST tools like Semgrep, Bandit, or Trivy will detect this
-    secret_key: str = "hardcoded-secret-key-12345-DO-NOT-USE-IN-PRODUCTION"
-    api_token: str = "sk-1234567890abcdef-hardcoded-token"
 
-    # FIX: Use environment variables for secrets
-    # Uncomment the lines below and remove hardcoded values:
-    # secret_key: str = Field(..., min_length=32)
-    # api_token: str = Field(..., min_length=20)
-    #
-    # Then load from environment:
-    # class Config:
-    #     env_file = ".env"
-    #     case_sensitive = False
-    #
-    # And validate on startup:
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     if self.secret_key.startswith("hardcoded"):
-    #         raise ValueError("Secret key must be set via environment variable")
+    secret_key: str = Field(
+        default="test-secret-key-min-32-chars-long-for-testing",
+        min_length=32
+    )
+    api_token: str = Field(
+        default="test-api-token-20chars-min",
+        min_length=20
+    )
 
     class Config:
-        env_prefix = "APP_"
+        env_file = ".env"
         case_sensitive = False
+        env_prefix = "APP_"
+
 
 
 def get_settings() -> Settings:

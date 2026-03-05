@@ -43,31 +43,20 @@ app = FastAPI(
 )
 
 
-# VULNERABILITY 2: Overly permissive CORS configuration
-# This allows any origin to access the API with credentials
-# SAST tools and security scanners will flag this as a security risk
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # VULNERABLE: Allows all origins
-    allow_credentials=True,  # DANGEROUS when combined with allow_origins=["*"]
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8000",
+        "https://yourdomain.com",
+    ],  # Specific allowed origins only
+    allow_credentials=True,  # Safe when origins are restricted
+    allow_methods=["GET", "POST", "DELETE"],  # Specific methods only
+    allow_headers=["Content-Type", "Authorization"],  # Specific headers only
 )
 
-# FIX: Secure CORS configuration
-# Comment out the middleware above and uncomment below:
-#
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=[
-#         "http://localhost:3000",
-#         "http://localhost:8000",
-#         "https://yourdomain.com",
-#     ],  # Specific allowed origins
-#     allow_credentials=True,  # Safe when origins are restricted
-#     allow_methods=["GET", "POST", "DELETE"],  # Specific methods
-#     allow_headers=["Content-Type", "Authorization"],  # Specific headers
-# )
 
 
 @app.get("/health", response_model=HealthResponse)
