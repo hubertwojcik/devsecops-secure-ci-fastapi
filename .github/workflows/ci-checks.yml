@@ -1,0 +1,8 @@
+name: CI Checks
+on: push
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: echo "Action!"
