@@ -16,3 +16,5 @@ jobs:
           path: "requirements-dev.txt"
       - name: Run linter
         run: python3 -m ruff check --fix app/ tests/
+      - name: Run tests
+        run: python3 -m pytest -v
