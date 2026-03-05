@@ -1,8 +1,8 @@
 """FastAPI application with intentional security vulnerabilities for DevSecOps training."""
 
 import logging
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,13 +25,13 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     settings = get_settings()
     logger.info(f"Starting {settings.app_name}")
     logger.info(f"Lab mode: {'ENABLED' if settings.lab_mode else 'DISABLED'}")
-    
+
     # WARNING: Do not log secrets in production!
     # This is here to demonstrate the hardcoded secret vulnerability
     logger.info(f"Using secret key: {settings.secret_key[:10]}...")
-    
+
     yield
-    
+
     logger.info("Shutting down application")
 
 

@@ -15,7 +15,7 @@ def clear_store():
     notes_store.clear()
 
 
-@pytest.fixture
+@pytest.fixture()
 def client():
     """Create a test client."""
     return TestClient(app)

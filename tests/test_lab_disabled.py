@@ -1,6 +1,7 @@
 """Tests to verify lab endpoints are disabled by default."""
 
 import os
+
 from fastapi.testclient import TestClient
 
 
@@ -38,7 +39,7 @@ def test_lab_endpoints_return_consistent_error(client: TestClient):
         "/lab/echo",
         "/lab/render"
     ]
-    
+
     for endpoint in endpoints:
         response = client.get(endpoint)
         assert response.status_code == 403, f"Endpoint {endpoint} should return 403"
@@ -51,7 +52,7 @@ def test_lab_mode_message_is_clear(client: TestClient):
     """Test that lab mode disabled message is clear and informative."""
     response = client.get("/lab/echo")
     assert response.status_code == 403
-    
+
     detail = response.json()["detail"]
     # Should mention that lab endpoints are disabled
     assert "lab" in detail.lower() or "disabled" in detail.lower()

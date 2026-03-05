@@ -1,9 +1,8 @@
 """Notes API routes."""
 
 import logging
-from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException
 
 from app.models import Note, NoteCreate
 from app.store import notes_store
@@ -55,7 +54,7 @@ def delete_note(note_id: int) -> None:
 #     """Delete a note by ID with API key authentication."""
 #     from app.config import get_settings
 #     settings = get_settings()
-#     
+#
 #     # Validate API key
 #     if not x_api_key:
 #         raise HTTPException(
@@ -63,7 +62,7 @@ def delete_note(note_id: int) -> None:
 #             detail="Missing API key",
 #             headers={"WWW-Authenticate": "ApiKey"}
 #         )
-#     
+#
 #     # In production, use secure comparison and proper key management
 #     expected_key = os.getenv("API_KEY", "secure-api-key-from-env")
 #     if x_api_key != expected_key:
@@ -71,6 +70,6 @@ def delete_note(note_id: int) -> None:
 #             status_code=403,
 #             detail="Invalid API key"
 #         )
-#     
+#
 #     if not notes_store.delete_note(note_id):
 #         raise HTTPException(status_code=404, detail="Note not found")
