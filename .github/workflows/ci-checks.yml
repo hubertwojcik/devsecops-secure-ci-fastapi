@@ -4,5 +4,15 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        run: echo "Action!"
+      - name: Checkout out the repository to the runner
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        uses: py-actions/py-dependency-install@v4
+        with:
+          path: "requirements-dev.txt"
+      - name: Run linter
+        run: python3 -m ruff check --fix app/ tests/
