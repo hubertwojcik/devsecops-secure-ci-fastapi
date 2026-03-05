@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: echo "Action!"
+        run: echo "Action!"
