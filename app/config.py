@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         min_length=32
     )
     api_token: str = Field(
-        default="test-api-token-20ch",
+        default="test-api-token-20chars-min",
         min_length=20
     )
 
